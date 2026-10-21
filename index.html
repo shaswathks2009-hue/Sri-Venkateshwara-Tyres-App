@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sri Venkateshwara Tyres</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#f2f5f9;color:#222}
+header{background:#102c54;color:white;padding:25px 18px;text-align:center}
+header h1{margin:0;font-size:25px}
+header p{margin-bottom:0}
+main{padding:18px;max-width:600px;margin:auto}
+.card{background:white;padding:18px;margin:15px 0;border-radius:14px;box-shadow:0 3px 12px #0001}
+h2{color:#153b69;font-size:20px}
+button{background:#153b69;color:white;border:0;padding:13px;border-radius:8px;width:100%;font-size:16px;margin-top:10px}
+input,select,textarea{box-sizing:border-box;width:100%;padding:12px;margin:7px 0 12px;border:1px solid #ccc;border-radius:7px;font-size:16px}
+footer{text-align:center;padding:20px;color:#666}
+</style>
+</head>
+<body>
+<header>
+<h1>Sri Venkateshwara Tyres</h1>
+<p>Tyre Care • Wheel Alignment • Customer Service</p>
+</header>
+<main>
+<section class="card">
+<h2>Welcome!</h2>
+<p>Your trusted partner for tyre care and wheel alignment.</p>
+</section>
+<section class="card">
+<h2>🚗 Tyre Change Reminder</h2>
+<p>Keep track of your vehicle's tyre service.</p>
+<label>Vehicle number</label>
+<input id="vehicle" placeholder="e.g. TN 01 AB 1234">
+<label>Last tyre service date</label>
+<input id="serviceDate" type="date">
+<label>Reminder interval</label>
+<select id="interval">
+<option value="3">3 months</option>
+<option value="6" selected>6 months</option>
+<option value="12">12 months</option>
+</select>
+<button onclick="reminder()">Check Reminder</button>
+<p id="reminderResult"></p>
+</section>
+<section class="card">
+<h2>🛞 Book Wheel Alignment</h2>
+<p>Request an appointment at our shop.</p>
+<form id="bookingForm">
+<label>Customer name</label>
+<input id="customer" required placeholder="Enter your name">
+<label>Mobile number</label>
+<input id="phone" required type="tel" pattern="[0-9]{10}" placeholder="10-digit mobile number">
+<label>Vehicle number</label>
+<input id="car" required placeholder="Vehicle registration">
+<label>Appointment date</label>
+<input id="date" required type="date">
+<label>Preferred time</label>
+<select id="time">
+<option>10:00 AM</option>
+<option>11:00 AM</option>
+<option>12:00 PM</option>
+<option>2:00 PM</option>
+<option>3:00 PM</option>
+<option>4:00 PM</option>
+<option>5:00 PM</option>
+</select>
+<label>Additional details</label>
+<textarea id="details" placeholder="Any vehicle or alignment concerns?"></textarea>
+<button type="submit">Request Appointment</button>
+</form>
+<p id="bookingResult"></p>
+</section>
+</main>
+<footer>Thank you for choosing Sri Venkateshwara Tyres!</footer>
+<script>
+function reminder(){
+ const date=document.getElementById('serviceDate').value;
+ const vehicle=document.getElementById('vehicle').value.trim();
+ const months=Number(document.getElementById('interval').value);
+ const out=document.getElementById('reminderResult');
+ if(!date||!vehicle){out.textContent='Please enter your vehicle number and service date.';return;}
+ const next=new Date(date+'T12:00:00');
+ next.setMonth(next.getMonth()+months);
+ out.textContent='Vehicle: '+vehicle+'. Suggested next service: '+next.toLocaleDateString('en-IN')+'.';
+}
+document.getElementById('date').min=new Date().toLocaleDateString('en-CA');
+document.getElementById('bookingForm').addEventListener('submit',function(e){
+ e.preventDefault();
+ const booking={
+ name:document.getElementById('customer').value,
+ phone:document.getElementById('phone').value,
+ vehicle:document.getElementById('car').value,
+ date:document.getElementById('date').value,
+ time:document.getElementById('time').value,
+ details:document.getElementById('details').value
+ };
+ document.getElementById('bookingResult').textContent=
+ 'Appointment request prepared for '+booking.date+' at '+booking.time+
+ '. This demo has not sent your booking to the shop. Please contact the shop to confirm.';
+});
+</script>
+</body>
+</html>
